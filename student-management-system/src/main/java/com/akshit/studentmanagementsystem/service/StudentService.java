@@ -5,7 +5,9 @@ import com.akshit.studentmanagementsystem.exception.StudentNotFoundException;
 import com.akshit.studentmanagementsystem.model.Student;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class StudentService {
@@ -34,6 +36,11 @@ public class StudentService {
          }
 
          return student;
+    }
+
+    public List<Student> getAllStudents(){
+
+         return new ArrayList<>(students.values());
     }
 
 

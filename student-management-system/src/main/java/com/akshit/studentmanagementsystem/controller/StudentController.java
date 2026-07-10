@@ -5,6 +5,8 @@ import com.akshit.studentmanagementsystem.model.Student;
 import org.springframework.web.bind.annotation.*;
 import com.akshit.studentmanagementsystem.service.StudentService;
 
+import java.util.List;
+
 @RestController
 public class StudentController {
 
@@ -22,5 +24,11 @@ public class StudentController {
     @GetMapping("/students/{id}")
     public Student getStudent(@PathVariable Integer id){
          return studentService.getStudent(id);
+    }
+
+
+    @GetMapping("/students")
+    public List<Student> getStudents(){
+         return studentService.getAllStudents();
     }
 }
