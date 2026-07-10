@@ -43,6 +43,22 @@ public class StudentService {
          return new ArrayList<>(students.values());
     }
 
+    public Student updateStudent(Integer id,StudentDTO studentDTO){
+
+        Student student = students.get(id);
+
+        if(student == null){
+            throw new StudentNotFoundException("Student with id "+id+" not found");
+        }
+
+        student.setName(studentDTO.getName());
+        student.setAge(studentDTO.getAge());
+        student.setEmail(studentDTO.getEmail());
+        student.setCity(studentDTO.getCity());
+
+        return student;
+    }
+
 
 
 }
