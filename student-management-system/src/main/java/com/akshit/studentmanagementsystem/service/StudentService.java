@@ -15,16 +15,6 @@ public class StudentService {
    private HashMap<Integer, Student> students = new HashMap<>();
    private Integer nextId = 1;
 
-    public Student addStudent(StudentDTO dto){
-
-         Student student = new Student(nextId,dto.getName(),dto.getAge(),dto.getEmail(),dto.getCity());
-
-         students.put(nextId,student);
-
-         nextId++;
-
-         return student;
-    }
 
     public Student getStudent(Integer id){
 
@@ -40,8 +30,20 @@ public class StudentService {
 
     public List<Student> getAllStudents(){
 
-         return new ArrayList<>(students.values());
+         return new ArrayList<>(students.values()); // students.values() returns Collection<Student> and new ArrayList<>(students.values()); returns  List<Student> !!!
     }
+
+    public Student addStudent(StudentDTO dto){
+
+         Student student = new Student(nextId,dto.getName(),dto.getAge(),dto.getEmail(),dto.getCity());
+
+         students.put(nextId,student);
+
+         nextId++;
+
+         return student;
+    }
+
 
     public Student updateStudent(Integer id,StudentDTO studentDTO){
 
@@ -57,6 +59,17 @@ public class StudentService {
         student.setCity(studentDTO.getCity());
 
         return student;
+    }
+
+
+    public void deleteStudent(Integer id){
+
+        if(!students.containsKey(id)){
+            throw new StudentNotFoundException("Student with id "+id+" not found");
+        }
+
+        students.remove(id);
+
     }
 
 

@@ -16,16 +16,16 @@ public class StudentController {
          this.studentService = studentService;
      }
 
-     @PostMapping("/students")
-     public Student addStudent(@RequestBody StudentDTO studentDTO){
-          return studentService.addStudent(studentDTO);
-    }
-
     @GetMapping("/students/{id}")
     public Student getStudent(@PathVariable Integer id){
          return studentService.getStudent(id);
     }
 
+
+     @PostMapping("/students")
+     public Student addStudent(@RequestBody StudentDTO studentDTO){
+          return studentService.addStudent(studentDTO);
+    }
 
     @GetMapping("/students")
     public List<Student> getStudents(){
@@ -36,4 +36,10 @@ public class StudentController {
     public Student updateStudent(@PathVariable Integer id,@RequestBody StudentDTO studentDTO){
          return studentService.updateStudent(id,studentDTO);
     }
+
+    @DeleteMapping("/students/{id}")
+   public void deleteStudent(@PathVariable Integer id){
+         studentService.deleteStudent(id);
+    }
+
 }

@@ -1,6 +1,12 @@
 package com.akshit.studentmanagementsystem.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "students")
 public class Student {
+    @Id
+    @GeneratedValue(statergy = GenerationType.IDENTITY) // @GeneratedValue → Automatically generate the ID , GenerationType.IDENTITY → MySQL generates it using AUTO_INCREMENT.
     private Integer id;
     private String name;
     private Integer age;
