@@ -3,73 +3,65 @@ package com.akshit.studentmanagementsystem.service;
 import com.akshit.studentmanagementsystem.dto.StudentDTO;
 import com.akshit.studentmanagementsystem.exception.StudentNotFoundException;
 import com.akshit.studentmanagementsystem.model.Student;
+import com.akshit.studentmanagementsystem.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
 
 @Service
 public class StudentService {
 
-   private HashMap<Integer, Student> students = new HashMap<>();
-   private Integer nextId = 1;
+
+    private StudentRepository studentRepository;
+
+    public StudentService(StudentRepository studentRepository){
+        this.studentRepository = studentRepository;
+    }
 
 
     public Student getStudent(Integer id){
 
-         Student student = students.get(id);
-
-         if(student == null)
-         {
-             throw new StudentNotFoundException("Student with id "+ id + " not found");
-         }
-
-         return student;
+        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student with id : " + id + " not found"));
     }
 
     public List<Student> getAllStudents(){
 
-         return new ArrayList<>(students.values()); // students.values() returns Collection<Student> and new ArrayList<>(students.values()); returns  List<Student> !!!
+         return studentRepository.findAll();
     }
 
     public Student addStudent(StudentDTO dto){
 
-         Student student = new Student(nextId,dto.getName(),dto.getAge(),dto.getEmail(),dto.getCity());
+         Student student = new Student();
 
-         students.put(nextId,student);
-
-         nextId++;
-
-         return student;
+         student.setName(dto.getName());
+         student.setAge(dto.getAge());
+         student.setCity(dto.getCity());
+         student.setEmail(dto.getEmail());
+         
+          return studentRepository.save(student);
     }
 
 
     public Student updateStudent(Integer id,StudentDTO studentDTO){
 
-        Student student = students.get(id);
+         Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student with id : " + id + " not found"));
 
-        if(student == null){
-            throw new StudentNotFoundException("Student with id "+id+" not found");
-        }
 
         student.setName(studentDTO.getName());
         student.setAge(studentDTO.getAge());
         student.setEmail(studentDTO.getEmail());
         student.setCity(studentDTO.getCity());
 
-        return student;
+        return studentRepository.save(student);
     }
 
 
     public void deleteStudent(Integer id){
 
-        if(!students.containsKey(id)){
-            throw new StudentNotFoundException("Student with id "+id+" not found");
-        }
+            Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student with id : " + id + " not found"));
 
-        students.remove(id);
-
+            studentRepository.delete(student);
     }
 
 
