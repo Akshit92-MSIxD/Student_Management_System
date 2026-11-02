@@ -1,10 +1,22 @@
 package com.akshit.studentmanagementsystem.dto;
 
+import jakarta.validation.constraints.*;
+
 public class StudentDTO {
 
+
+    @NotBlank(message = "Name cannot be blank")
     private String name;
+
+    @NotNull(message = "Age is required")
+    @Min(value=1,message="Age must be greater than 0")
     private Integer age;
+
+    @NotBlank(message = "email cannot be blank")
+    @Email(message = "Please provide a valid email address")
     private String email;
+
+    @NotBlank(message="city cannot be blank")
     private String city;
 
 
