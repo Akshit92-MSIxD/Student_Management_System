@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "students")
 public class Student {
     @Id
-    @GeneratedValue(statergy = GenerationType.IDENTITY) // @GeneratedValue → Automatically generate the ID , GenerationType.IDENTITY → MySQL generates it using AUTO_INCREMENT.
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // @GeneratedValue → Automatically generate the ID , GenerationType.IDENTITY → MySQL generates it using AUTO_INCREMENT.
     private Integer id;
     private String name;
     private Integer age;
