@@ -2,6 +2,7 @@ package com.akshit.studentmanagementsystem.controller;
 
 import com.akshit.studentmanagementsystem.dto.StudentDTO;
 import com.akshit.studentmanagementsystem.model.Student;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.akshit.studentmanagementsystem.service.StudentService;
 
