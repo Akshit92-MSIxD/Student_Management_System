@@ -23,16 +23,47 @@ public class StudentController {
          return studentService.getStudent(id);
     }
 
+    @GetMapping("/students")
+    public List<Student> getStudents(){
+         return studentService.getAllStudents();
+    }
+
+    @GetMapping("/students/city/{city}")
+    public List<Student> getStudentsByCity(@PathVariable String city){
+         return studentService.getStudentsByCity(city);
+    }
+
+    @GetMapping("/students/age/greater-than-equal/{age}")
+    public List<Student> getStudentsByAgeGreaterThanEqual(@PathVariable int age){
+         return studentService.getStudentsByAgeGreaterThanEqual(age);
+    }
+
+    @GetMapping("/students/age/less-than-equal/{age}")
+    public List<Student> getStudentsByAgeLessThanEqual(@PathVariable int age){
+        return studentService.getStudentsByAgeLessThanEqual(age);
+    }
+
+    @GetMapping("/students/name/search/{name}")
+    public List<Student> getStudentsByNameContaining(@PathVariable String name){
+         return studentService.getStudentsByNameContaining(name);
+    }
+
+    @GetMapping("/students/search/and")
+    public List<Student> getStudentsByCityAndAgeGreaterThanEqual(@RequestParam String city, @RequestParam int minAge){
+               return studentService.getStudentsByCityAndAgeGreaterThanEqual(city,minAge);
+    }
+
+    @GetMapping("/students/search/or")
+    public List<Student> getStudentsByCityOrAgeGreaterThanEqual(@RequestParam String city,@RequestParam int minAge){
+         return studentService.getStudentsByCityOrAgeGreaterThanEqual(city,minAge);
+    }
+
 
      @PostMapping("/students")
      public Student addStudent(@Valid @RequestBody StudentDTO studentDTO){
           return studentService.addStudent(studentDTO);
     }
 
-    @GetMapping("/students")
-    public List<Student> getStudents(){
-         return studentService.getAllStudents();
-    }
 
     @PutMapping("/students/{id}")
     public Student updateStudent(@Valid @PathVariable Integer id,@RequestBody @Valid StudentDTO studentDTO){

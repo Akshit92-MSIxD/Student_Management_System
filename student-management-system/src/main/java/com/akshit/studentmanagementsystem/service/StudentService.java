@@ -30,6 +30,33 @@ public class StudentService {
          return studentRepository.findAll();
     }
 
+    public List<Student>  getStudentsByCity(String city){
+        return studentRepository.findByCity(city);
+    }
+
+    public List<Student> getStudentsByAgeGreaterThanEqual(int age)
+    {
+        return studentRepository.findByAgeGreaterThanEqual(age);
+    }
+
+    public List<Student> getStudentsByAgeLessThanEqual(int age)
+    {
+        return studentRepository.findByAgeLessThanEqual(age);
+    }
+
+    public List<Student> getStudentsByNameContaining(String name)
+    {
+        return studentRepository.findByNameContaining(name);
+    }
+
+    public List<Student> getStudentsByCityAndAgeGreaterThanEqual(String city,int age){
+        return studentRepository.findByCityAndAgeGreaterThanEqual(city,age);
+    }
+
+    public List<Student> getStudentsByCityOrAgeGreaterThanEqual(String city,int age){
+        return studentRepository.findByCityOrAgeGreaterThanEqual(city,age);
+    }
+
     public Student addStudent(StudentDTO dto){
 
          Student student = new Student();
