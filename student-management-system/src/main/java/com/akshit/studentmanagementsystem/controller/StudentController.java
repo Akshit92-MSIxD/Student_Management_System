@@ -58,6 +58,29 @@ public class StudentController {
          return studentService.getStudentsByCityOrAgeGreaterThanEqual(city,minAge);
     }
 
+    @GetMapping("/students/desc")
+    public List<Student> getAllStudentsByOrderByAgeDesc(){
+         return studentService.getAllStudentsByOrderByAgeDesc();
+    }
+
+    @GetMapping("/students/asc")
+    public List<Student> getAllStudentsByOrderByAgeAsc(){
+         return studentService.getAllStudentsByOrderByAgeAsc();
+    }
+
+    @GetMapping("/students/city/{city}/desc")
+    public List<Student> getStudentsByCityOrderByAgeDesc(@PathVariable String city){
+         return studentService.getStudentsByCityOrderByAgeDesc(city);
+    }
+
+    @GetMapping("/students/city/{city}/asc")
+    public List<Student> getStudentsByCityOrderByAgeAsc(@PathVariable String city){
+         return studentService.getStudentsByCityOrderByAgeAsc(city);
+    }
+
+
+
+
 
      @PostMapping("/students")
      public Student addStudent(@Valid @RequestBody StudentDTO studentDTO){

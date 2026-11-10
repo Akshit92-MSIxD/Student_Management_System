@@ -13,4 +13,8 @@ public interface StudentRepository extends JpaRepository<Student,Integer> {
        List<Student> findByNameContaining(String name);
        List<Student> findByCityAndAgeGreaterThanEqual(String city, int age);
        List<Student> findByCityOrAgeGreaterThanEqual(String city,int age);
+       List<Student> findAllByOrderByAgeDesc();
+       List<Student> findAllByOrderByAgeAsc();
+       List<Student> findByCityOrderByAgeDesc(String city);
+       List<Student> findByCityOrderByAgeAsc(String city);
 }

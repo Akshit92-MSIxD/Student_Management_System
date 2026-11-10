@@ -57,6 +57,22 @@ public class StudentService {
         return studentRepository.findByCityOrAgeGreaterThanEqual(city,age);
     }
 
+    public List<Student> getAllStudentsByOrderByAgeDesc(){
+        return studentRepository.findAllByOrderByAgeDesc();
+    }
+
+    public List<Student> getAllStudentsByOrderByAgeAsc(){
+        return studentRepository.findAllByOrderByAgeAsc();
+    }
+
+    public List<Student> getStudentsByCityOrderByAgeDesc(String city){
+        return studentRepository.findByCityOrderByAgeDesc(city);
+    }
+
+    public List<Student> getStudentsByCityOrderByAgeAsc(String city){
+        return studentRepository.findByCityOrderByAgeAsc(city);
+    }
+
     public Student addStudent(StudentDTO dto){
 
          Student student = new Student();
