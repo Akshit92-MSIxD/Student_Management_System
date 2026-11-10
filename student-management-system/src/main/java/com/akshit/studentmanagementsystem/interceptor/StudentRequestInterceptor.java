@@ -11,22 +11,22 @@ public class StudentRequestInterceptor implements HandlerInterceptor{
      @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
 
-         System.out.println("Before Controller");
-         System.out.println("Dispatcher Type : " + request.getDispatcherType());
-         System.out.println("Handler: " + handler);
+         System.out.println("First Interceptor - Before Controller");
+         System.out.println("First Interceptor - Dispatcher Type : " + request.getDispatcherType());
+         System.out.println("First Interceptor - Handler: " + handler);
          return true;
      }
 
 
      @Override
     public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler, ModelAndView modelAndView) throws Exception{
-         System.out.println("After Controller");
+         System.out.println("First Interceptor - After Controller");
 
          if(modelAndView != null){
              System.out.println(modelAndView.getViewName());
          }
          else {
-             System.out.println("No View - Rest API");
+             System.out.println("First Interceptor - No View - Rest API");
          }
      }
 
@@ -34,13 +34,13 @@ public class StudentRequestInterceptor implements HandlerInterceptor{
      @Override
      public void afterCompletion(HttpServletRequest request,HttpServletResponse response, Object handler,Exception ex) throws Exception{
 
-         System.out.println("Request Completed");
+         System.out.println("First Interceptor - Request Completed");
 
           if(ex != null){
               System.out.println(ex.getMessage());
           }
           else {
-              System.out.println("HTTP Status : " + response.getStatus());
+              System.out.println("First Interceptor - HTTP Status : " + response.getStatus());
           }
      }
 
