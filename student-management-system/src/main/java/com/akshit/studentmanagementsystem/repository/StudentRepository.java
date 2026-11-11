@@ -2,6 +2,7 @@ package com.akshit.studentmanagementsystem.repository;
 
 import com.akshit.studentmanagementsystem.model.Student;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.domain.Page;

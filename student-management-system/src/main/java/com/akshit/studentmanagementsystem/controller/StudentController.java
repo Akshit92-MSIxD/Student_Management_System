@@ -92,11 +92,15 @@ public class StudentController {
     }
 
     @GetMapping("/students/paginated")
-    public Page<Student> getAllStudentsWithPagination(@RequestParam int page, @RequestParam int size){
+    public StudentPageResponse getAllStudentsWithPagination(@RequestParam int page, @RequestParam int size){
          return studentService.getAllStudentsWithPagination(page,size);
     }
 
 
+     @GetMapping("/students/sorted")
+     public List<Student> getAllStudentsWithSorting(@RequestParam String sortBy, @RequestParam String direction){
+          return studentService.getAllStudentsWithSorting(sortBy,direction);
+     }
 
 
 
