@@ -4,6 +4,9 @@ import com.akshit.studentmanagementsystem.dto.StudentDTO;
 import com.akshit.studentmanagementsystem.exception.StudentNotFoundException;
 import com.akshit.studentmanagementsystem.model.Student;
 import com.akshit.studentmanagementsystem.repository.StudentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -71,6 +74,19 @@ public class StudentService {
 
     public List<Student> getStudentsByCityOrderByAgeAsc(String city){
         return studentRepository.findByCityOrderByAgeAsc(city);
+    }
+
+    public List<Student> getTopThreeStudentsByOrderByAgeDesc(){
+        return studentRepository.findTop3ByOrderByAgeDesc();
+    }
+
+    public List<Student> getTopFourStudentsByCityOrderByAgeAsc(String city){
+        return studentRepository.findTop4ByCityOrderByAgeAsc(city);
+    }
+
+    public Page<Student> getAllStudentsWithPagination(int page, int size){
+          Pageable pageable = PageRequest.of(page,size);
+          return studentRepository.findAll(pageable);
     }
 
     public Student addStudent(StudentDTO dto){

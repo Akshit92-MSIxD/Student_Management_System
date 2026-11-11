@@ -1,8 +1,10 @@
 package com.akshit.studentmanagementsystem.controller;
 
 import com.akshit.studentmanagementsystem.dto.StudentDTO;
+import com.akshit.studentmanagementsystem.dto.StudentPageResponse;
 import com.akshit.studentmanagementsystem.model.Student;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.akshit.studentmanagementsystem.service.StudentService;
@@ -76,6 +78,22 @@ public class StudentController {
     @GetMapping("/students/city/{city}/asc")
     public List<Student> getStudentsByCityOrderByAgeAsc(@PathVariable String city){
          return studentService.getStudentsByCityOrderByAgeAsc(city);
+    }
+
+
+    @GetMapping("/students/desc/top-3")
+    public List<Student> getTopThreeStudentsByOrderByAgeDesc(){
+         return studentService.getTopThreeStudentsByOrderByAgeDesc();
+    }
+
+    @GetMapping("/students/city/{city}/asc/top-4")
+    public List<Student> getTopFourStudentsByCityOrderByAgeAsc(@PathVariable String city){
+          return studentService.getTopFourStudentsByCityOrderByAgeAsc(city);
+    }
+
+    @GetMapping("/students/paginated")
+    public Page<Student> getAllStudentsWithPagination(@RequestParam int page, @RequestParam int size){
+         return studentService.getAllStudentsWithPagination(page,size);
     }
 
 
