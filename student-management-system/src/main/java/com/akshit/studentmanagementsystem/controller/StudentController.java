@@ -1,5 +1,7 @@
 package com.akshit.studentmanagementsystem.controller;
 
+import com.akshit.studentmanagementsystem.dto.StudentBasicDTO;
+import com.akshit.studentmanagementsystem.dto.StudentBasicInfo;
 import com.akshit.studentmanagementsystem.dto.StudentDTO;
 import com.akshit.studentmanagementsystem.dto.StudentPageResponse;
 import com.akshit.studentmanagementsystem.model.Student;
@@ -91,16 +93,35 @@ public class StudentController {
           return studentService.getTopFourStudentsByCityOrderByAgeAsc(city);
     }
 
+    // Pagination
     @GetMapping("/students/paginated")
     public StudentPageResponse getAllStudentsWithPagination(@RequestParam int page, @RequestParam int size){
          return studentService.getAllStudentsWithPagination(page,size);
     }
 
-
+   // Dynamic sorting
      @GetMapping("/students/sorted")
      public List<Student> getAllStudentsWithSorting(@RequestParam String sortBy, @RequestParam String direction){
           return studentService.getAllStudentsWithSorting(sortBy,direction);
      }
+
+     // Pagination + Dynamic Sorting
+     @GetMapping("/students/paginated-sorted")
+     public StudentPageResponse getAllStudentsWithPaginationAndSorting(@RequestParam int page, @RequestParam int size, @RequestParam String sortBy, @RequestParam String direction){
+         return studentService.getAllStudentsWithPaginationAndSorting(page,size,sortBy,direction);
+     }
+
+     // Interface based Projection (StudentBasicInfo is a interface declared in DTO package)
+    @GetMapping("/students/basic-info")
+    public List<StudentBasicInfo> getAllStudentsBasicInfo(){
+         return studentService.getAllStudentsBasicInfo();
+    }
+
+    // Class Bases Projection (StudentBasicDTO is a class declared in DTO package)
+    @GetMapping("/students/basic-dto")
+    public List<StudentBasicDTO> getAllStudentsBasicDTO(){
+         return studentService.getAllStudentsBasicDTO();
+    }
 
 
 

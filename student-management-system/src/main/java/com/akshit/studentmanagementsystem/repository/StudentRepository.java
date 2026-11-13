@@ -1,5 +1,7 @@
 package com.akshit.studentmanagementsystem.repository;
 
+import com.akshit.studentmanagementsystem.dto.StudentBasicDTO;
+import com.akshit.studentmanagementsystem.dto.StudentBasicInfo;
 import com.akshit.studentmanagementsystem.model.Student;
 
 import org.springframework.data.domain.Sort;
@@ -24,5 +26,10 @@ public interface StudentRepository extends JpaRepository<Student,Integer> {
        List<Student> findTop3ByOrderByAgeDesc();
        List<Student> findTop4ByCityOrderByAgeAsc(String city);
 
-       Page<Student> findAll(Pageable pageable);
+         // We dont need to declare these two methods since they are inherted from JpaRepo :)
+//       Page<Student> findAll(Pageable pageable);
+//         List<Student> findAll(Sort sort);
+
+       List<StudentBasicInfo> findAllProjectedBy();  // Interface based Projection
+       List<StudentBasicDTO> findAllBy();  // Class Based Projection
 }

@@ -1,5 +1,7 @@
 package com.akshit.studentmanagementsystem.service;
 
+import com.akshit.studentmanagementsystem.dto.StudentBasicDTO;
+import com.akshit.studentmanagementsystem.dto.StudentBasicInfo;
 import com.akshit.studentmanagementsystem.dto.StudentDTO;
 import com.akshit.studentmanagementsystem.dto.StudentPageResponse;
 import com.akshit.studentmanagementsystem.exception.StudentNotFoundException;
@@ -99,6 +101,31 @@ public class StudentService {
               return studentRepository.findAll(Sort.by(sortBy).ascending());
 
              return studentRepository.findAll(Sort.by(sortBy).descending());
+    }
+
+
+    public StudentPageResponse getAllStudentsWithPaginationAndSorting(int page,int size,String sortBy, String direction){
+
+         Sort sort = null;
+
+         if("desc".equalsIgnoreCase(direction))
+             sort = Sort.by(sortBy).descending().and(Sort.by("id").ascending());
+         else
+             sort = Sort.by(sortBy).ascending().and(Sort.by("id").ascending());
+
+        Pageable pageable = PageRequest.of(page,size,sort);
+
+        Page<Student> studentPage = studentRepository.findAll(pageable);
+
+        return new StudentPageResponse(studentPage.getContent(),studentPage.getNumber(),studentPage.getSize(),studentPage.getTotalElements(),studentPage.getTotalPages(),studentPage.isLast());
+    }
+
+    public List<StudentBasicInfo> getAllStudentsBasicInfo(){
+         return studentRepository.findAllProjectedBy();
+    }
+
+    public List<StudentBasicDTO> getAllStudentsBasicDTO(){
+        return studentRepository.findAllBy();
     }
 
     public Student addStudent(StudentDTO dto){
