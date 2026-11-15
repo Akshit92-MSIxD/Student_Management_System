@@ -5,6 +5,7 @@ import com.akshit.studentmanagementsystem.dto.StudentBasicInfo;
 import com.akshit.studentmanagementsystem.dto.StudentDTO;
 import com.akshit.studentmanagementsystem.dto.StudentPageResponse;
 import com.akshit.studentmanagementsystem.model.Student;
+import com.akshit.studentmanagementsystem.service.EntityLifecycleExperimentService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,11 @@ import java.util.List;
 public class StudentController {
 
      private final  StudentService  studentService;
+     private final  EntityLifecycleExperimentService e;
 
-     public StudentController(StudentService studentService){
+     public StudentController(StudentService studentService, EntityLifecycleExperimentService e){
          this.studentService = studentService;
+         this.e = e;
      }
 
     @GetMapping("/students/{id}")
@@ -111,7 +114,7 @@ public class StudentController {
          return studentService.getAllStudentsWithPaginationAndSorting(page,size,sortBy,direction);
      }
 
-     // Interface based Projection (StudentBasicInfo is a interface declared in DTO package)
+     // Interface based Projection (StudentBasicInfo is an interface declared in DTO package)
     @GetMapping("/students/basic-info")
     public List<StudentBasicInfo> getAllStudentsBasicInfo(){
          return studentService.getAllStudentsBasicInfo();
@@ -121,6 +124,36 @@ public class StudentController {
     @GetMapping("/students/basic-dto")
     public List<StudentBasicDTO> getAllStudentsBasicDTO(){
          return studentService.getAllStudentsBasicDTO();
+    }
+
+    // Entity Lifecycle Test - 1
+    @GetMapping("/students/transistentToPersistent-test")
+    public String testTransientToPersistent(){
+
+         e.testTransientToPersistent();
+         return "Transient to Persistent test completed";
+
+    }
+
+    // Entity Lifecycle Test - 2
+    @GetMapping("/students/persistentToDetach-test1")
+    public String testPersistentToDetach1(){
+         e.testPersistentToDetach1();
+         return "Persistent to Detach test1 completed";
+    }
+
+    // Entity Lifecycle Test - 3
+    @GetMapping("/students/persistentToDetach-test2")
+    public String testPersistentToDetach2(){
+         e.testPersistentToDetach2();
+         return "Persistent to Detach test2 completed";
+    }
+
+    // Entity Lifecycle Test - 4
+    @GetMapping("/students/persistentToDetachToPersistent-test")
+    public String testPersistentToDetachedToPersistent(){
+         e.testPersistentToDetachToPersistent();
+         return "Persistent to Detach to Persistent test completed";
     }
 
 
