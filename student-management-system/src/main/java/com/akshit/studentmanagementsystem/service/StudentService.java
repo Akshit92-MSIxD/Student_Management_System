@@ -2,7 +2,7 @@ package com.akshit.studentmanagementsystem.service;
 
 import com.akshit.studentmanagementsystem.dto.StudentBasicDTO;
 import com.akshit.studentmanagementsystem.dto.StudentBasicInfo;
-import com.akshit.studentmanagementsystem.dto.StudentDTO;
+import com.akshit.studentmanagementsystem.dto.StudentRequestDTO;
 import com.akshit.studentmanagementsystem.dto.StudentPageResponse;
 import com.akshit.studentmanagementsystem.exception.StudentNotFoundException;
 import com.akshit.studentmanagementsystem.model.Student;
@@ -20,7 +20,7 @@ import java.util.List;
 public class StudentService {
 
 
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
     public StudentService(StudentRepository studentRepository){
         this.studentRepository = studentRepository;
@@ -128,7 +128,7 @@ public class StudentService {
         return studentRepository.findAllBy();
     }
 
-    public Student addStudent(StudentDTO dto){
+    public Student addStudent(StudentRequestDTO dto){
 
          Student student = new Student();
 
@@ -141,15 +141,15 @@ public class StudentService {
     }
 
 
-    public Student updateStudent(Integer id,StudentDTO studentDTO){
+    public Student updateStudent(Integer id, StudentRequestDTO studentRequestDTO){
 
          Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student with id : " + id + " not found"));
 
 
-        student.setName(studentDTO.getName());
-        student.setAge(studentDTO.getAge());
-        student.setEmail(studentDTO.getEmail());
-        student.setCity(studentDTO.getCity());
+        student.setName(studentRequestDTO.getName());
+        student.setAge(studentRequestDTO.getAge());
+        student.setEmail(studentRequestDTO.getEmail());
+        student.setCity(studentRequestDTO.getCity());
 
         return studentRepository.save(student);
     }
