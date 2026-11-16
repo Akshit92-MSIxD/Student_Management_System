@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "students")
 public class Student {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // @GeneratedValue → Automatically generate the ID , GenerationType.IDENTITY → MySQL generates it using AUTO_INCREMENT.
     private Integer id;
@@ -13,14 +14,19 @@ public class Student {
     private String email;
     private String city;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    private Department department;
+
     public Student(){}
 
-    public Student(Integer id, String name, Integer age, String email, String city) {
+    public Student(Integer id, String name, Integer age, String email, String city , Department department) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.email  = email;
         this.city = city;
+        this.department = department;
     }
 
     public Integer getId(){
@@ -63,6 +69,10 @@ public class Student {
     {
         this.city = city;
     }
+
+    public Department getDepartment(){ return department;}
+
+    public void setDepartment(Department department){ this.department = department;}
 
     @Override
     public String toString(){
