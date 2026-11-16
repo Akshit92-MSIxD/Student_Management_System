@@ -2,13 +2,11 @@ package com.akshit.studentmanagementsystem.controller;
 
 import com.akshit.studentmanagementsystem.dto.StudentBasicDTO;
 import com.akshit.studentmanagementsystem.dto.StudentBasicInfo;
-import com.akshit.studentmanagementsystem.dto.StudentDTO;
+import com.akshit.studentmanagementsystem.dto.StudentRequestDTO;
 import com.akshit.studentmanagementsystem.dto.StudentPageResponse;
 import com.akshit.studentmanagementsystem.model.Student;
 import com.akshit.studentmanagementsystem.service.EntityLifecycleExperimentService;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.akshit.studentmanagementsystem.service.StudentService;
 
@@ -159,14 +157,14 @@ public class StudentController {
 
 
      @PostMapping("/students")
-     public Student addStudent(@Valid @RequestBody StudentDTO studentDTO){
-          return studentService.addStudent(studentDTO);
+     public Student addStudent(@Valid @RequestBody StudentRequestDTO studentRequestDTO){
+          return studentService.addStudent(studentRequestDTO);
     }
 
 
     @PutMapping("/students/{id}")
-    public Student updateStudent(@Valid @PathVariable Integer id,@RequestBody @Valid StudentDTO studentDTO){
-         return studentService.updateStudent(id,studentDTO);
+    public Student updateStudent(@Valid @PathVariable Integer id,@RequestBody @Valid StudentRequestDTO studentRequestDTO){
+         return studentService.updateStudent(id, studentRequestDTO);
     }
 
     @DeleteMapping("/students/{id}")
