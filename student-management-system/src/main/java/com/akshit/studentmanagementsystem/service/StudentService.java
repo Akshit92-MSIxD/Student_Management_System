@@ -4,9 +4,13 @@ import com.akshit.studentmanagementsystem.dto.StudentBasicDTO;
 import com.akshit.studentmanagementsystem.dto.StudentBasicInfo;
 import com.akshit.studentmanagementsystem.dto.StudentRequestDTO;
 import com.akshit.studentmanagementsystem.dto.StudentPageResponse;
+import com.akshit.studentmanagementsystem.exception.DepartmentNotFoundException;
 import com.akshit.studentmanagementsystem.exception.StudentNotFoundException;
+import com.akshit.studentmanagementsystem.model.Department;
 import com.akshit.studentmanagementsystem.model.Student;
+import com.akshit.studentmanagementsystem.repository.DepartmentRepository;
 import com.akshit.studentmanagementsystem.repository.StudentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,9 +25,11 @@ public class StudentService {
 
 
     private final StudentRepository studentRepository;
+    private final DepartmentRepository departmentRepository;
 
-    public StudentService(StudentRepository studentRepository){
+    public StudentService(StudentRepository studentRepository,DepartmentRepository departmentRepository){
         this.studentRepository = studentRepository;
+        this.departmentRepository = departmentRepository;
     }
 
 
@@ -141,6 +147,7 @@ public class StudentService {
     }
 
 
+    @Transactional
     public Student updateStudent(Integer id, StudentRequestDTO studentRequestDTO){
 
          Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student with id : " + id + " not found"));
@@ -154,12 +161,33 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
+    @Transactional
+    public Student updateStudentDepartment(Integer studentId,Integer departmentId){
+
+        Student student = studentRepository.findById(studentId).orElseThrow(()-> new StudentNotFoundException("Student with id : "+studentId+" not found"));
+        Department department = departmentRepository.findById(departmentId).orElseThrow(()-> new DepartmentNotFoundException("Department with id : "+departmentId+" not found"));
+
+        student.setDepartment(department);
+
+        return student;
+    }
+
 
     public void deleteStudent(Integer id){
 
             Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student with id : " + id + " not found"));
 
             studentRepository.delete(student);
+    }
+
+    @Transactional
+    public void testLazyLoading(Integer studentId){
+
+         Student student = studentRepository.findById(studentId).orElseThrow(()-> new StudentNotFoundException("Student with id : "+studentId+" not found"));
+
+         System.out.println("Student retrieved");
+
+         System.out.println(student.getDepartment().getName()) ; // Lazy loading of the department inside the student entity
     }
 
 

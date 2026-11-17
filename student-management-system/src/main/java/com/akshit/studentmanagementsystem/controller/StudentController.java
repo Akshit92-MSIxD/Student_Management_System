@@ -154,6 +154,14 @@ public class StudentController {
          return "Persistent to Detach to Persistent test completed";
     }
 
+    // Test Lazy Loading (Relationship Concept @ManyToOne from student to Department)
+
+    @GetMapping("/students/{studentId}/test-lazy-loading")
+    public String testLazyLoading(@PathVariable Integer studentId){
+        studentService.testLazyLoading(studentId);
+         return "Lazy Loading test completed";
+    }
+
 
 
      @PostMapping("/students")
@@ -165,6 +173,11 @@ public class StudentController {
     @PutMapping("/students/{id}")
     public Student updateStudent(@Valid @PathVariable Integer id,@RequestBody @Valid StudentRequestDTO studentRequestDTO){
          return studentService.updateStudent(id, studentRequestDTO);
+    }
+
+    @PutMapping("/students/{studentId}/departments/{departmentId}")
+    public Student updateStudentDepartment(@PathVariable Integer studentId,@PathVariable Integer departmentId){
+          return studentService.updateStudentDepartment(studentId,departmentId);
     }
 
     @DeleteMapping("/students/{id}")
