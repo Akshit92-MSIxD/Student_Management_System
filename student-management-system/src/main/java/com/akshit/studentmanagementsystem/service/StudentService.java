@@ -225,7 +225,7 @@ public class StudentService {
 
     }
 
-    // This "JOIN FETCH" will solve the N+1 select problem :)
+    // This "JOIN FETCH" (make use of SQL join in SQL) will solve the N+1 select problem :)
     public List<Student> getAllStudentsWithDepartmentFetched(){
 
              List<Student> students = studentRepository.getAllStudentsWithDepartmentFetched(); // will take 1 query to fetch all students along with their association(department) and it will not fetch those student having department field as null :)
@@ -238,6 +238,27 @@ public class StudentService {
                  return students;
 
 
+    }
+
+// Batch Fetching:
+// Hibernate uses SQL IN to fetch multiple lazy-loaded eligible association proxies currently registered in the persistence context's batch-fetch queue in a single query.
+// It is one of the strategies used to reduce the N+1 SELECT problem.
+// Configure the batch size using @BatchSize(size = 5) on the Department entity.
+
+    @Transactional
+    public void testBatchFetching() {
+
+        List<Student> students = studentRepository.findAll();
+
+        for (Student student : students) {
+
+            if (student.getDepartment() != null) {
+                // Accessing one Department or association proxy can trigger Hibernate to initialize
+                // multiple eligible uninitialized Department proxies (up to the configured
+                // batch size) currently registered in the persistence context's batch-fetch queue.
+                System.out.println(student.getDepartment().getName());
+            }
+        }
     }
 
 

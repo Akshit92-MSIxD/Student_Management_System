@@ -2,9 +2,10 @@ package com.akshit.studentmanagementsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-
+@BatchSize(size = 5)
 @Entity
 @Table(name = "departments")
 public class Department {

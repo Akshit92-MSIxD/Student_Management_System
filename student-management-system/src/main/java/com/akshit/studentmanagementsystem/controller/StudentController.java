@@ -199,6 +199,14 @@ public class StudentController {
         return studentService.getAllStudentsWithDepartmentFetched();
     }
 
+    // Batch Fetching -> one of the ways to reduce or avoid or solve N+1 select queries in case we want to access the associations later :)
+    @GetMapping("/students/test-batch-fetching")
+    public String testBatchFetching(){
+         studentService.testBatchFetching();
+
+         return "Batch Fetching test completed to avoid or reduce N+1 select queries :)";
+    }
+
      @PostMapping("/students")
      public Student addStudent(@Valid @RequestBody StudentRequestDTO studentRequestDTO){
           return studentService.addStudent(studentRequestDTO);
