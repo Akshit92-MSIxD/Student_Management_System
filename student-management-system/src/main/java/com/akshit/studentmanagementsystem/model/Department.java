@@ -1,6 +1,9 @@
 package com.akshit.studentmanagementsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
 @Entity
 @Table(name = "departments")
