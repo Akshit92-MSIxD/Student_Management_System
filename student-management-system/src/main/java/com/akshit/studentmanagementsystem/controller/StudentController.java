@@ -154,15 +154,50 @@ public class StudentController {
          return "Persistent to Detach to Persistent test completed";
     }
 
-    // Test Lazy Loading (Relationship Concept @ManyToOne from student to Department)
+    // Test Lazy Loading (Relationship -> @ManyToOne from student to Department) (Please change fetch = FetchType.LAZY in student class for department field :)
 
     @GetMapping("/students/{studentId}/test-lazy-loading")
     public String testLazyLoading(@PathVariable Integer studentId){
         studentService.testLazyLoading(studentId);
+
          return "Lazy Loading test completed";
     }
 
+    // Test Eager Loading (Relationship -> @ManyOne from studen to Department) (Please change fetch = FetchType.EAGER in student class for department field :)
 
+    @GetMapping("/students/{studentId}/test-eager-loading")
+    public String testEagerLoading(@PathVariable Integer studentId){
+         studentService.testEagerLoading(studentId);
+
+         return "Eager Loading test completed";
+    }
+
+    // This method is indirectly associated with JPQL in the studentRepository :)
+
+    @GetMapping("/students/department")
+    public List<Student> getStudentsByDepartment(@RequestParam String name){
+         return studentService.getStudentsByDepartment(name);
+    }
+
+    // This method is indirectly associated with JPQL in the studentRepository :)
+
+    @GetMapping("/students/department/fetched")
+    public List<Student> getStudentsByDepartmentFetched(@RequestParam String name){
+         return studentService.getStudentsByDepartmentFetched(name);
+    }
+
+    // N+1 select problem
+    @GetMapping("/students/test-n-plus-one")
+     public String  testNplusOne(){
+         studentService.testNplusOne();
+
+         return "N+1 query test completed.";
+     }
+     // Avoids or Solve N+1 select problem :)
+    @GetMapping("/students/with-department-fetched")
+    public List<Student> getAllStudentsWithDepartmentFetched() {
+        return studentService.getAllStudentsWithDepartmentFetched();
+    }
 
      @PostMapping("/students")
      public Student addStudent(@Valid @RequestBody StudentRequestDTO studentRequestDTO){

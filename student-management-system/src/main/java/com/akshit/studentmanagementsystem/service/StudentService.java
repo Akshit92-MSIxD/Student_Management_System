@@ -187,8 +187,60 @@ public class StudentService {
 
          System.out.println("Student retrieved");
 
-         System.out.println(student.getDepartment().getName()) ; // Lazy loading of the department inside the student entity
+         System.out.println(student.getDepartment().getName()) ; // Lazy loading of the department inside the student entity when accessed :)
     }
+
+    @Transactional
+    public void testEagerLoading(Integer studentId){
+
+        // here eager loading will happen so student's association i.e department will be fetched even before it is accessed !!!
+        Student student = studentRepository.findById(studentId).orElseThrow(()-> new StudentNotFoundException("Student with id : "+studentId+" not found"));
+
+        System.out.println("Student retrieved");
+        System.out.println("Eager Loading testing completed");
+
+
+    }
+
+    // This method is indirectly associated with JPQL in the studentRepository :)
+    public List<Student> getStudentsByDepartment(String departmentName){
+        return studentRepository.getStudentsByDepartment(departmentName);
+    }
+
+    // This method is indirectly associated with JPQL in the studentRepository :)
+    public List<Student> getStudentsByDepartmentFetched(String departmentName){
+        return studentRepository.getStudentsByDepartmentFetched(departmentName);
+    }
+
+    @Transactional // Add @Transactional(readOnly = true) to this service method so the persistence context remains active throughout the experiment.
+    public void testNplusOne(){   // this method demonstrates N+1 select problem :)
+
+        List<Student> students = studentRepository.findAll();  // will take 1 query to fetch all students but their individual association(department field) will be just a proxy object until it is accessed :)
+
+        for(Student student : students){  // will trigger at max n unique queries to fetch n individual unique department !!!
+
+            if(student.getDepartment() != null)
+            System.out.println(student.getDepartment().getName());
+        }
+
+    }
+
+    // This "JOIN FETCH" will solve the N+1 select problem :)
+    public List<Student> getAllStudentsWithDepartmentFetched(){
+
+             List<Student> students = studentRepository.getAllStudentsWithDepartmentFetched(); // will take 1 query to fetch all students along with their association(department) and it will not fetch those student having department field as null :)
+
+             for(Student student : students){  // will not trigger any additional Select query since association(departement field) is already fetched along with individual student because of "JOIN FETCH" :)
+                 System.out.println(student.getDepartment().getName());
+
+             }
+
+                 return students;
+
+
+    }
+
+
 
 
 
