@@ -10,6 +10,7 @@ import com.akshit.studentmanagementsystem.model.Department;
 import com.akshit.studentmanagementsystem.model.Student;
 import com.akshit.studentmanagementsystem.repository.DepartmentRepository;
 import com.akshit.studentmanagementsystem.repository.StudentRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,10 +27,12 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final DepartmentRepository departmentRepository;
+    private final EntityManager entityManager;
 
-    public StudentService(StudentRepository studentRepository,DepartmentRepository departmentRepository){
+    public StudentService(StudentRepository studentRepository,DepartmentRepository departmentRepository,EntityManager entityManager){
         this.studentRepository = studentRepository;
         this.departmentRepository = departmentRepository;
+        this.entityManager = entityManager;
     }
 
 
@@ -259,6 +262,36 @@ public class StudentService {
                 System.out.println(student.getDepartment().getName());
             }
         }
+    }
+
+
+  // Cascade Persist (propagate persist operation to associated entity :)
+    @Transactional
+    public void testCascadePersist(){
+
+        Student student = new Student();
+
+        student.setName("Mihir Gupta");
+        student.setEmail("mihir@gmail.com");
+        student.setAge(25);
+        student.setCity("Gorakhpur");
+
+        Department department = new Department();
+
+        department.setName("Artificial Intelligence");
+
+        student.setDepartment(department);
+
+        System.out.println("Before Persist Student : "+entityManager.contains(student));
+        System.out.println("Before Persist Department : "+entityManager.contains(department));
+
+        entityManager.persist(student);
+
+        System.out.println("After making student Persist -> Student : "+entityManager.contains(student));
+        System.out.println("After making student Persist -> Department : "+entityManager.contains(department));
+
+
+         entityManager.flush();
     }
 
 

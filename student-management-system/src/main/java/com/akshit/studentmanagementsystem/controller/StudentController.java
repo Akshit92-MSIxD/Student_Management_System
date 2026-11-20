@@ -207,6 +207,18 @@ public class StudentController {
          return "Batch Fetching test completed to avoid or reduce N+1 select queries :)";
     }
 
+
+    // Cascade Persist
+    @GetMapping("/students/test-cascade-persist")
+    public String testCascadePersist(){
+         studentService.testCascadePersist();
+
+         return "Cascade Persist Test completed";
+    }
+
+
+
+
      @PostMapping("/students")
      public Student addStudent(@Valid @RequestBody StudentRequestDTO studentRequestDTO){
           return studentService.addStudent(studentRequestDTO);

@@ -14,7 +14,8 @@ public class Student {
     private String email;
     private String city;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,
+               cascade = CascadeType.PERSIST)
     @JoinColumn(name = "department_id")
     private Department department;
 
