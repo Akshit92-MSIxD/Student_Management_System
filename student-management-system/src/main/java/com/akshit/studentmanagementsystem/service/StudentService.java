@@ -27,12 +27,10 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final DepartmentRepository departmentRepository;
-    private final EntityManager entityManager;
 
-    public StudentService(StudentRepository studentRepository,DepartmentRepository departmentRepository,EntityManager entityManager){
+    public StudentService(StudentRepository studentRepository,DepartmentRepository departmentRepository){
         this.studentRepository = studentRepository;
         this.departmentRepository = departmentRepository;
-        this.entityManager = entityManager;
     }
 
 
@@ -264,35 +262,6 @@ public class StudentService {
         }
     }
 
-
-  // Cascade Persist (propagate persist operation to associated entity :)
-    @Transactional
-    public void testCascadePersist(){
-
-        Student student = new Student();
-
-        student.setName("Mihir Gupta");
-        student.setEmail("mihir@gmail.com");
-        student.setAge(25);
-        student.setCity("Gorakhpur");
-
-        Department department = new Department();
-
-        department.setName("Artificial Intelligence");
-
-        student.setDepartment(department);
-
-        System.out.println("Before Persist Student : "+entityManager.contains(student));
-        System.out.println("Before Persist Department : "+entityManager.contains(department));
-
-        entityManager.persist(student);
-
-        System.out.println("After making student Persist -> Student : "+entityManager.contains(student));
-        System.out.println("After making student Persist -> Department : "+entityManager.contains(department));
-
-
-         entityManager.flush();
-    }
 
 
 

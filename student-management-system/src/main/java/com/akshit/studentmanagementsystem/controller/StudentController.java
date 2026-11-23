@@ -211,13 +211,38 @@ public class StudentController {
     // Cascade Persist
     @GetMapping("/students/test-cascade-persist")
     public String testCascadePersist(){
-         studentService.testCascadePersist();
+         e.testCascadePersist();
 
          return "Cascade Persist Test completed";
     }
 
+    // testing merge operation without or with cascade
+
+    @GetMapping("/students/test-merge-without-or-with-cascade")
+    public String testMergeWithoutOrWithCascade(){
+         e.testMergeWithoutOrWithCascade();
+
+         return "Merge without or with Cascade test completed";
+    }
 
 
+    // testing remove operation without or with cascade
+
+    @GetMapping("/students/test-remove-without-or-with-cascade")
+    public String testRemoveWithoutOrWithCascade() {
+        e.testRemoveWithoutOrWithCascade();
+        return "Remove without or with Cascade test completed";
+    }
+
+    // testing refresh option without or with cascade
+
+    @GetMapping("/students/test-refresh-without-or-without-cascade")
+    public String testRefreshWithoutOrWithCascade(){
+         e.testRefreshWithoutOrWithCascade();
+
+         return "Refresh without or with cascade test completed";
+
+    }
 
      @PostMapping("/students")
      public Student addStudent(@Valid @RequestBody StudentRequestDTO studentRequestDTO){

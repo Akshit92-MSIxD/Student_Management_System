@@ -15,7 +15,7 @@ public class Student {
     private String city;
 
     @ManyToOne(fetch = FetchType.LAZY,
-               cascade = CascadeType.PERSIST)
+               cascade = CascadeType.REFRESH)
     @JoinColumn(name = "department_id")
     private Department department;
 
